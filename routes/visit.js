@@ -39,7 +39,7 @@ router.get('/visit/:id', async (req,res) => {
     }
 });
 
-router.get('/visits', async (req,res) => {
+router.get('/visits', async (res) => {
     try{
         const visits = await Visit.find();
         res.status(200).json(visits);
@@ -48,7 +48,53 @@ router.get('/visits', async (req,res) => {
     }
 });
 
+router.delete('/visit/:id', async (req,res) => {
+    const { id } = req.params;
 
+        if(!mongoose.Types.ObjectId.isValid(id)){
+            return res.status(400).json({message : 'Invalid ID format'});
+        };
+    try{
+        const visitToDelete = await Visit.findByIdAndDelete(id);
+        if(!visitToDelete){
+            res.status(404).json({message : 'Visit not found'});
+        }
+        res.status(200).json({message : 'Visit was successfully deleted'});
+    }catch(err){
+        res.status(500).json({message : 'Failed to delete visit', error : err.message});
+    };
+})
 
+router.put('/visit/:id', async (req,res) =>{
+    const { id } = req.params;
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        return res.status(400).json({message : 'Invalid ID format'});
+    };
+    try{
+        const visitToUpdate = await Visit.findByIdAndUpdate(id, req.body, {new : true, overwrite : true});
+        if(!visitToUpdate){
+            res.status(400).json({message : 'Visit not found'});
+        }
+        res.status(200).json(visitToUpdate);
+    }catch(err){
+        res.status(500).json({message : 'Failed to update visit', error : err.message});
+    };
+});
+
+router.patch('/visit/:id', async (req,res) => {
+    const { id } = req.params;
+    if(!mongoose.Types.ObjectId.isValid(id)){
+        return res.status(400).json({message : 'Invalid ID format'});
+    };
+    try{
+        const visitToUpdate = await Visit.findByIdAndUpdate(id, req.body, {new : true});
+        if(!visitToUpdate){
+            res.status(400).json({message : 'Visit not found'});
+        }
+        res.status(200).json(visitToUpdate);
+    }catch(err){
+        res.status(500).json({message : 'Failed to update visit', error : err.message});
+    };
+});
 
 module.exports = router;
