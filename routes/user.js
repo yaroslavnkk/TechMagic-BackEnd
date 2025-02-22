@@ -5,17 +5,18 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 function generateAccessToken(user){
-    return jwt.sign(user, 'secret');
+    return jwt.sign(user, 'secret', {expiresIn : '1h'});
 }
 
 router.post('/register', async (req,res) => {
      try {
             const { userFirstName, userMiddleName, userLastName, userBirthDate, email, password } = req.body;
+            const saltRounds = 10;
         
             const existingUser = await User.findOne({ email });
             if (existingUser) return res.status(400).json({ message: "User already exists" });
         
-            const hashedPassword = await bcrypt.hash(password, 10);
+            const hashedPassword = await bcrypt.hash(password, saltRounds);
         
             const newUser = new User({
               userFirstName,
@@ -47,7 +48,8 @@ router.post('/login', async (req,res) => {
        }
    
        const token = generateAccessToken({email});
-       res.json({token});
+       res.json({token, user : user.toJSON()});
 });
+
 
 module.exports = router;
