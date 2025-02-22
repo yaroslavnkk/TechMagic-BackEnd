@@ -1,5 +1,5 @@
 const { connectDB } = require('./config/database/database');
-
+const { initializeDB } = require('./config/database/db-init');
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -8,7 +8,9 @@ const userRoutes = require('./routes/user');
 
 const app = express();
  
-connectDB();
+connectDB().then(() => {
+    initializeDB();
+});
 
 app.use(bodyParser.json());
 app.use(cors());
