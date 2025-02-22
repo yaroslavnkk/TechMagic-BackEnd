@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const visitSchema = new mongoose.model({
+const visitSchema = new mongoose.Schema({
     doctor : { type: mongoose.Schema.Types.ObjectId, ref : "Doctor", required : true },
     user : { type: mongoose.Schema.Types.ObjectId, ref: "User", required : true },
     date : {type : Date, required : true},

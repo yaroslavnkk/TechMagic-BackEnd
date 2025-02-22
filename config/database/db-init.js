@@ -6,35 +6,35 @@ const doctors = [ {
     lastName: "Петренко",
     patronymic: "Іванович",
     specialty: "Терапевт",
-    category: "Вища"
+    qualification: "Вища"
   },
   {
     firstName: "Марія",
     lastName: "Коваленко",
     patronymic: "Михайлівна",
     specialty: "Кардіолог",
-    category: "Перша"
+    qualification: "Перша"
   },
   {
     firstName: "Ірина",
     lastName: "Василенко",
     patronymic: "Петрівна",
     specialty: "Невролог",
-    category: "Вища"
+    qualification: "Вища"
   },
   {
     firstName: "Андрій",
     lastName: "Мельник",
     patronymic: "Олегович",
     specialty: "Ортопед",
-    category: "Друга"
+    qualification: "Друга"
   },
   {
     firstName: "Наталія",
     lastName: "Шевченко",
     patronymic: "Василівна",
     specialty: "Офтальмолог",
-    category: "Вища"
+    qualification: "Вища"
   }];
 
 const initializeDB = async () => {

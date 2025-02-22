@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Visit = require('../models/Visit');
-const { default: mongoose } = require('mongoose');
+const mongoose = require('mongoose');
 
 
 router.post('/visit', async (req,res) => {
