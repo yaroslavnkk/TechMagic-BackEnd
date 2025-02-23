@@ -161,7 +161,7 @@ router.get('/visit/:id', async (req,res) => {
         };
 
     try{
-        const visit = Visit.findById(id);
+        const visit = await Visit.findById(id).lean();
         if(!visit){
             res.status(404).json({message : 'Visit not found'});
         }
