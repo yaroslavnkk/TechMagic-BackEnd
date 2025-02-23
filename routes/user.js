@@ -7,6 +7,74 @@ const jwt = require('jsonwebtoken');
 function generateAccessToken(user){
     return jwt.sign(user, 'secret', {expiresIn : '1h'});
 }
+/**
+ * @swagger
+ * /register:
+ *   post:
+ *     summary: Register a new user
+ *     description: Allows a user to register by providing their personal details and password. The password will be hashed before saving.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               userFirstName:
+ *                 type: string
+ *                 example: Іван
+ *               userMiddleName:
+ *                 type: string
+ *                 example: Олександрович
+ *               userLastName:
+ *                 type: string
+ *                 example: Коваль
+ *               userBirthDate:
+ *                 type: string
+ *                 format: date
+ *                 example: 1990-05-15
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: ivan.koval@example.com
+ *               password:
+ *                 type: string
+ *                 example: password123
+ *     responses:
+ *       201:
+ *         description: User registered successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User registered successfully
+ *       400:
+ *         description: User already exists
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User already exists
+ *       500:
+ *         description: Internal Server Error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Internal Server Error
+ *                 error:
+ *                   type: string
+ *                   example: Some detailed error message
+ */
 
 router.post('/register', async (req,res) => {
      try {
@@ -35,7 +103,78 @@ router.post('/register', async (req,res) => {
             res.status(500).json({ message: "Internal Server Error", error : error.message});
           }
 });
-
+/**
+ * @swagger
+ * /login:
+ *   post:
+ *     summary: Login an existing user
+ *     description: Allows a registered user to log in by providing their email and password. If valid, a JWT token is returned.
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: ivan.koval@example.com
+ *               password:
+ *                 type: string
+ *                 example: password123
+ *     responses:
+ *       200:
+ *         description: Login successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 token:
+ *                   type: string
+ *                   example: jwt_token_string
+ *                 user:
+ *                   type: object
+ *                   properties:
+ *                     userFirstName:
+ *                       type: string
+ *                       example: Іван
+ *                     userMiddleName:
+ *                       type: string
+ *                       example: Олександрович
+ *                     userLastName:
+ *                       type: string
+ *                       example: Коваль
+ *                     userBirthDate:
+ *                       type: string
+ *                       format: date
+ *                       example: 1990-05-15
+ *                     email:
+ *                       type: string
+ *                       format: email
+ *                       example: ivan.koval@example.com
+ *       404:
+ *         description: User not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: User not found
+ *       401:
+ *         description: Invalid password
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Invalid password
+ */
 router.post('/login', async (req,res) => {
    const { email, password } = req.body;
    
