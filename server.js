@@ -21,7 +21,7 @@ const port = 4000;
 
 app.use('', userRoutes);
 app.use('', doctorRoutes);
-app.use('', visitRoutes);
+app.use('api/', visitRoutes);
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`);

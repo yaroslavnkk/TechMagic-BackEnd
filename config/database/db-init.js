@@ -35,7 +35,22 @@ const doctors = [ {
     patronymic: "Василівна",
     specialty: "Офтальмолог",
     qualification: "Вища"
-  }];
+  },
+  {
+    firstName: "Владислав",
+    lastName: "Байдук",
+    patronymic : "Ігорович",
+    specialty : "Хірург",
+    qualification : "Перша"
+  },
+  {
+    firstName : "Вікторія",
+    lastName : "Коваль",
+    patronymic : "Йосипівна",
+    specialty : "Педіатр",
+    qualification : "Вища"
+  }
+];
 
 const initializeDB = async () => {
     try{
